@@ -54,6 +54,6 @@ HTML5, CSS3, JavaScript, Dijkstra’s algorithm, Render static sites (deployment
 
 ## Links to add before submission
 
-- Repository: `https://github.com/<your-account>/wayfinder`
+- Repository: `https://github.com/hexa3/wayfinder-reveriehacks-2026`
 - Live demo: `https://wayfinder-accessible-routes.onrender.com`
 - Demo video: `<upload your 2-minute screen recording>`
