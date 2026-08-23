@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#081622" />
+    <title>Wayfinder — routes that include everyone</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Skip to route planner</a>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Wayfinder home"><span class="brand-mark">W</span><span>wayfinder</span><em>beta</em></a>
+      <nav aria-label="Primary navigation">
+        <a class="active" href="#workspace">Plan</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#impact">Impact</a>
+      </nav>
+      <button class="profile" type="button" aria-label="Open student profile"><span>AS</span> Amina <b>⌄</b></button>
+    </header>
+
+    <main id="workspace">
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">ADAPTIVE CAMPUS WAYFINDING</p>
+          <h1 id="page-title">A route should fit <i>you.</i></h1>
+          <p class="lede">Wayfinder translates campus conditions into a clear, accessible plan—before an ordinary trip becomes an exclusion.</p>
+        </div>
+        <div class="offline-badge"><span class="pulse-dot"></span><div><strong>Local data ready</strong><small>Offline plan available</small></div></div>
+      </section>
+
+      <section class="planner-grid" aria-label="Route planner">
+        <aside class="control-panel">
+          <div class="panel-heading"><div><p class="eyebrow">YOUR CONTEXT</p><h2>Build my route</h2></div><button id="resetButton" class="text-button" type="button">Reset</button></div>
+
+          <form id="routeForm">
+            <fieldset>
+              <legend>Where are you going?</legend>
+              <label for="start">Starting at</label>
+              <div class="select-wrap"><select id="start" name="start"><option value="library">Library</option><option value="northGate">North Gate</option><option value="science">Science Hall</option></select></div>
+              <label for="destination">Destination</label>
+              <div class="select-wrap"><select id="destination" name="destination"><option value="wellness">Wellness Center</option><option value="commons">Student Commons</option><option value="science">Science Hall</option></select></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>What should this route account for?</legend>
+              <div class="needs" role="group" aria-label="Accessibility needs">
+                <button class="need-chip selected" type="button" data-need="mobility" aria-pressed="true"><span>♿</span> Step-free</button>
+                <button class="need-chip" type="button" data-need="vision" aria-pressed="false"><span>◉</span> High visibility</button>
+                <button class="need-chip" type="button" data-need="sensory" aria-pressed="false"><span>◌</span> Low sensory load</button>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Right now</legend>
+              <div class="segmented" role="group" aria-label="Conditions">
+                <button type="button" class="condition selected" data-condition="rain" aria-pressed="true">☔ Rain</button>
+                <button type="button" class="condition" data-condition="night" aria-pressed="false">◐ Night</button>
+                <button type="button" class="condition" data-condition="busy" aria-pressed="false">⌁ Busy</button>
+              </div>
+            </fieldset>
+
+            <button class="primary-button" type="submit"><span>Generate my route</span><b>→</b></button>
+          </form>
+
+          <div class="privacy-note"><span>⌂</span><p><strong>Private by design.</strong> Your needs stay on this device; route preferences are never shared with campus staff.</p></div>
+        </aside>
+
+        <section class="map-panel" aria-label="Interactive campus route map">
+          <div class="map-toolbar"><div class="map-title"><span class="live-dot"></span><span id="mapStatus">Live campus snapshot</span><small>Updated just now</small></div><button id="reportButton" class="report-button" type="button">+ Report a barrier</button></div>
+          <div id="map" class="map" role="img" aria-label="Illustrated map of Cedar Grove Campus showing an accessible route from the Library to Wellness Center">
+            <div class="map-label label-north">NORTH GATE</div><div class="map-label label-library">LIBRARY</div><div class="map-label label-science">SCIENCE HALL</div><div class="map-label label-commons">STUDENT COMMONS</div><div class="map-label label-wellness">WELLNESS CENTER</div><div class="map-label label-garden">RAIN GARDEN</div>
+            <svg id="routeSvg" viewBox="0 0 900 560" preserveAspectRatio="none" aria-hidden="true"><path id="routeShadow"></path><path id="routePath"></path><g id="routeMarkers"></g></svg>
+            <div class="building building-library"><span>⌂</span></div><div class="building building-science"><span>⌬</span></div><div class="building building-commons"><span>●</span></div><div class="building building-wellness"><span>✚</span></div><div class="building building-north">↑</div>
+            <div id="barrier" class="barrier" hidden><span>!</span><div><strong>Flooded curb ramp</strong><small>Reported 4m ago</small></div></div>
+            <div id="routeTooltip" class="route-tooltip"><span>♿</span><div><strong>Step-free crossing</strong><small>Protected from rain</small></div></div>
+            <div class="map-legend"><span><i class="route-line"></i>Your route</span><span><i class="safe-dot"></i>Verified access point</span></div>
+          </div>
+          <div class="map-footer"><span>Campus data: <b>94%</b> verified this term</span><span>Route calculation runs locally <b>⌁</b></span></div>
+        </section>
+      </section>
+
+      <section class="route-result" aria-live="polite" aria-labelledby="route-title">
+        <div class="result-main"><div class="route-icon">↗</div><div><p class="eyebrow">RECOMMENDED PLAN</p><h2 id="route-title">Covered, step-free route</h2><p id="routeSummary">Via the Rain Garden ramp and Wellness entrance.</p></div></div>
+        <div class="result-stat"><strong id="routeTime">8 min</strong><span>arrival time</span></div><div class="result-stat"><strong id="routeDistance">540 m</strong><span>distance</span></div>
+        <button id="explainButton" type="button" class="explain-button">Why this route? <span>→</span></button>
+      </section>
+
+      <section id="explanation" class="explanation" hidden aria-labelledby="explain-title">
+        <div><p class="eyebrow">TRANSPARENT ROUTING</p><h2 id="explain-title">Your plan, explained.</h2><p>Wayfinder balances independence, safety, and time. It never treats accessibility as an afterthought.</p></div>
+        <div id="reasonList" class="reason-list"></div>
+      </section>
+
+      <section id="how-it-works" class="story-grid">
+        <article><span class="story-number">01</span><h2>People set the priorities.</h2><p>Students choose what makes a route work for them—without needing to disclose a diagnosis.</p></article>
+        <article><span class="story-number">02</span><h2>Conditions change the route.</h2><p>Rain, low light, crowds, and community reports adjust the route’s real-world suitability.</p></article>
+        <article><span class="story-number">03</span><h2>Every choice is visible.</h2><p>Clear trade-offs replace a black-box “fastest route,” building confidence one trip at a time.</p></article>
+      </section>
+
+      <section id="impact" class="impact"><div><p class="eyebrow">THE BIGGER PICTURE</p><h2>Independence is infrastructure.</h2></div><p>Wayfinder gives campuses a privacy-preserving way to learn where access breaks down, while giving every student an actionable route today.</p><div class="impact-metric"><strong>0</strong><span>personal profiles<br/>sent to campus</span></div></section>
+    </main>
+
+    <dialog id="barrierDialog" aria-labelledby="dialog-title"><form method="dialog"><button class="close-dialog" value="cancel" aria-label="Close">×</button><p class="eyebrow">COMMUNITY SIGNAL</p><h2 id="dialog-title">Report a barrier</h2><p>For this demo, submit a flooded curb ramp near the Library. Your report triggers a route recalculation.</p><label for="barrierType">Barrier type</label><select id="barrierType"><option>Flooded curb ramp</option><option>Blocked path</option><option>Lighting issue</option></select><button id="submitBarrier" class="primary-button" value="default">Share report <b>→</b></button><small>Do not use this tool to report emergencies. Contact campus emergency services instead.</small></form></dialog>
+    <footer><span>WAYFINDER / a student-built accessibility prototype</span><span>Designed with dignity, not assumptions.</span></footer>
+    <script src="app.js"></script>
+  </body>
+</html>

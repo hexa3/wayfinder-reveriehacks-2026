@@ -1,0 +1,92 @@
+# Wayfinder
+
+> A route should fit you.
+
+Wayfinder is an offline-capable, accessibility-first campus navigation prototype. Instead of treating the shortest route as the best route, it produces a transparent route based on a student’s mobility, vision, and sensory preferences plus live conditions such as rain, darkness, crowding, and reported barriers.
+
+Built for **ReverieHacks 2026 — Software Development track**.
+
+## Why it matters
+
+Campus navigation is usually designed around a fictional “average” walker. That breaks down when a ramp is flooded, a route is unlit, or the fastest path sends a student through a sensory-overloading crowd. These inconveniences can mean lost time, dependence on others, or no viable route at all.
+
+Wayfinder makes personal independence part of campus infrastructure. It lets a student express needs without disclosing a diagnosis, calculates a workable route locally, and explains its choices. Aggregated, de-identified barrier reports can also show campus operators where access is failing—without tracking students.
+
+## What the prototype does
+
+- Calculates a route through a campus graph using a weighted shortest-path algorithm.
+- Responds instantly to step-free, high-visibility, and low-sensory preferences.
+- Factors in rain, nighttime, and crowding conditions.
+- Lets a community barrier report force a safe reroute.
+- Explains why a route was selected instead of presenting a black-box answer.
+- Works without a backend or API key; all preferences remain in the browser for this prototype.
+- Includes keyboard focus states, semantic controls, an accessible dialog, and responsive layouts.
+
+## Run it
+
+There is no install step or build process.
+
+1. Clone this repository.
+2. Open `index.html` in a modern browser, or serve it locally:
+
+```bash
+python3 -m http.server 8080
+```
+
+3. Visit `http://localhost:8080`.
+
+## Demo flow (90 seconds)
+
+1. Start at **Library** and choose **Wellness Center**. Keep “Step-free” and “Rain” selected. Generate the route and point out the covered, step-free recommendation.
+2. Turn on **Night** and **High visibility**. Show that Wayfinder recomputes its priorities rather than simply drawing the same fastest path.
+3. Click **Report a barrier**, submit the flooded curb-ramp report, and show the route and rationale update.
+4. Open **Why this route?**. Explain that each decision is auditable and a student never has to reveal a diagnosis.
+5. End on the privacy metric: 0 personal profiles sent to campus.
+
+## Technical design
+
+Wayfinder represents a campus as a local weighted graph:
+
+```text
+student preferences + local conditions + barrier reports
+                         |
+                         v
+                 edge scoring policy
+                         |
+                         v
+                  Dijkstra route search
+                         |
+                         v
+            illustrated route + explanation cards
+```
+
+Every path segment has a base distance and verified attributes—for example `stepFree`, `covered`, `lit`, `busy`, or `steps`. The scoring policy applies a strong exclusion penalty to unsafe or incompatible segments (such as steps for a step-free route), plus smaller contextual penalties. Dijkstra’s algorithm then selects the lowest-cost viable route. The interface’s explanation cards are derived from the same policy, so the displayed rationale remains tied to the calculation.
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the data flow and safety model.
+
+## Privacy & safety
+
+- Accessibility preferences are processed locally in this prototype; they are not sent to a server.
+- Barrier reporting is a demo interaction. A production report service should collect the minimum data necessary, include moderation and expiry, and make its retention policy clear.
+- Wayfinder must not be used for emergency dispatch or life-safety decisions. The product directs users to emergency services for emergencies.
+- The campus shown is fictional. Route availability, surface conditions, and accessibility must be verified by the relevant institution before production use.
+
+## Roadmap
+
+1. Import verified GIS/accessibility data from campus facilities teams.
+2. Add an opt-in, moderated barrier-report API with report confidence and automatic expiry.
+3. Package the app as a PWA with encrypted offline campus maps.
+4. Conduct participatory usability studies with disabled students and campus accessibility offices.
+5. Build an operator dashboard showing only aggregate, privacy-thresholded access gaps.
+
+## Deployment
+
+This is a static site and can deploy to GitHub Pages, Netlify, or Render. `render.yaml` is included for Render static-site deployment.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+## Team
+
+Built by students for ReverieHacks 2026. Replace this section with your name, contact, and repository/deployment links before submission.
