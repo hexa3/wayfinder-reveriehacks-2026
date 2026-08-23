@@ -89,4 +89,4 @@ MIT. See [LICENSE](LICENSE).
 
 ## Team
 
-Built by students for ReverieHacks 2026. Replace this section with your name, contact, and repository/deployment links before submission.
+Built by students for ReverieHacks 2026. 
