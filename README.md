@@ -89,4 +89,8 @@ MIT. See [LICENSE](LICENSE).
 
 ## Team
 
-Built by students for ReverieHacks 2026. 
+Built by students for ReverieHacks 2026.
+
+---
+
+<p align="center">Maintained by <a href="https://sheheryar.xyz">Sheheryar</a> · <a href="https://github.com/hexa3">github.com/hexa3</a></p>
